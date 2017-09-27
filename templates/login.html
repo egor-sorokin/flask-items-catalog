@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
+    <script src="//apis.google.com/js/platform.js?onload=start"></script>
+    <style>
+        .login {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+
+            max-width: 400px;
+
+            margin: 60px auto 0;
+        }
+    </style>
+</head>
+<body>
+<div id="loginForm" class="login">
+    <h1>Please log in</h1>
+    <!-- gplus signin -->
+    <div id="signInButton">
+          <span class="g-signin"
+                data-scope="openid email"
+                data-clientid={{CLIENT_ID}}
+                data-redirecturi="postmessage"
+                data-accesstype="offline"
+                data-cookiepolicy="single_host_origin"
+                data-callback="signInCallback"
+                data-approvalprompt="force">
+          </span>
+    </div>
+</div>
+<div id="result"></div>
+
+<!-- gplus signin -->
+<script>
+    function signInCallback(authResult) {
+        if (authResult['code']) {
+            $('#loginForm').css('display', 'none');
+
+            $.ajax({
+                type: 'POST',
+                url: '/gconnect?state={{ STATE }}',
+                contentType: 'application/octet-stream; charset=utf-8',
+                data: authResult['code'],
+                success: function (data) {
+                    if (data) {
+                        $('#result').html('<div style="margin: 40px auto; width: 600px; text-align: center">' +
+                            'Login successful!</br>' + data + '</br>Redirecting...</div>');
+
+                        setTimeout(function () {
+                            window.location.href = '/catalog';
+                        }, 3000);
+
+                    } else if (authResult['error']) {
+                        console.log('There was an error: ', authResult['error']);
+                    } else {
+                        $('#result').text('Failed to make a server side call. Check your configuration and console')
+                    }
+                }
+            })
+        }
+    }
+</script>
+
+</body>
+</html>

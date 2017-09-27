@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="catalog__table catalog__table--one-item">
+    <form method="post"
+          action="{{ url_for('edit_category_item', category_id=item.category_id, item_id=item.id) }}"
+          class="form">
+        <div class="input-container">
+            <label for="newItemName">Enter item name:
+                <input type="text"
+                       id="newItemName"
+                       name="name"
+                       class="input"
+                       placeholder="{{item.name}}">
+            </label>
+        </div>
+
+        <div class="input-container">
+            <label for="newItemDescription">Enter item description:
+                <input type="text"
+                       id="newItemDescription"
+                       name="description"
+                       class="input"
+                       placeholder="{{item.description}}">
+            </label>
+        </div>
+
+        <div class="input-container">
+            <label for="newItemCategory">Choose category:
+                <select id="newItemCategory" name="category">
+                    {% for i in categories %}
+                    <option value="{{ i.id }}">{{ i.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+
+        <div class="form__button">
+            <input type="submit" value="Edit" class="button">
+        </div>
+    </form>
+
+    <a href="{{ url_for('catalog')}}" class="link">Cancel</a>
+
+</section>
+
+{% endblock %}

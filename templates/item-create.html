@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="catalog__table catalog__table--one-item">
+    <form method="post"
+          action="{{ url_for('create_category_item') }}"
+          class="form">
+        <div class="input-container">
+            <label for="newItemName">Enter item name:
+                <input type="text"
+                       id="newItemName"
+                       name="name"
+                       class="input">
+            </label>
+        </div>
+
+        <div class="input-container">
+            <label for="newItemDescription">Enter item description:
+                <input type="text"
+                       id="newItemDescription"
+                       name="description"
+                       class="input">
+            </label>
+        </div>
+
+        <div class="input-container">
+            <label for="newItemCategory">Choose category:
+                <select id="newItemCategory" name="category">
+                    {% for i in categories %}
+                    <option value="{{ i.id }}">{{ i.name }}</option>
+                    {% endfor %}
+                </select>
+            </label>
+        </div>
+
+        <div class="form__button">
+            <input type="submit" value="Create" class="button">
+        </div>
+    </form>
+
+    <a href="{{ url_for('catalog')}}" class="link">Cancel</a>
+
+</section>
+
+{% endblock %}

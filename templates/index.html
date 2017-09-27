@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="catalog__table">
+    <section class="catalog__section">
+        <h2 class="catalog__title">Categories</h2>
+        <ul class="catalog__list">
+            {% for i in categories %}
+            {% if i.id == selected_category %}
+            <li class="catalog__list-item active">
+                {% else %}
+            <li class="catalog__list-item">
+                {% endif %}
+                <a href="{{ url_for('category_items', category_id = i.id)}}"
+                   class="catalog__list-link">{{ i.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+    </section>
+
+    <section class="catalog__section">
+        <h3 class="catalog__title">Items</h3>
+        <ul class="catalog__list">
+            {% for i in items %}
+            <li class="catalog__list-item">
+                <a href="{{ url_for('preview_category_item', category_id = i.category_id, item_id = i.id)}}"
+                   class="catalog__list-link">{{ i.name }}</a>
+            </li>
+            {% endfor %}
+        </ul>
+        {% if 'username' in session %}
+        <div class="catalog__button-container">
+            <a href="{{ url_for('create_category_item') }}"
+               class="button">Add Item</a>
+        </div>
+        {% endif %}
+    </section>
+</section>
+
+{% endblock %}

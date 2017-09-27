@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="catalog__table catalog__table--one-item">
+    <h1 class="catalog__title">{{ item.name }}</h1>
+    <p class="catalog__text">{{ item.description }}</p>
+     {% if 'username' in session %}
+        <div class="catalog__button-container">
+            <a href="{{ url_for('edit_category_item', category_id=item.category_id, item_id=item.id) }}"
+               class="button">Edit</a>
+
+            <a href="{{ url_for('delete_category_item', category_id=item.category_id, item_id=item.id) }}"
+               class="button">Delete</a>
+        </div>
+    {% endif %}
+    <a href="{{ url_for('catalog')}}" class="link">Cancel</a>
+
+</section>
+
+{% endblock %}

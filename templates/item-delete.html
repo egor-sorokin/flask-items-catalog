@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<section class="catalog__table catalog__table--one-item">
+    <h1 class="catalog__title">Would you like to delete {{ item.name }}?</h1>
+
+    <form method="post"
+          action="{{ url_for('delete_category_item', category_id=category_id, item_id=item.id) }}"
+          class="form">
+        <div class="form__button">
+            <input type="submit" value="Delete" class="button">
+        </div>
+    </form>
+
+    <a href="{{ url_for('catalog')}}" class="link">Cancel</a>
+
+</section>
+
+{% endblock %}
